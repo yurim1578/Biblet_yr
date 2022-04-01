@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="RegistDAO">
+
+	<insert id="memRegist" parameterType="member">
+		INSERT INTO MEMBER
+		(mem_num,mem_name,mem_id,mem_pass,mem_nickname,mem_regdate,mem_email)
+		VALUES
+		(MEMBER_SEQ.nextval,#{mem_name},#{mem_id},#{mem_pass},#{mem_nickname},sysdate,#{mem_email})
+	</insert>
+
+	<insert id="admRegist" parameterType="admin">
+	
+	</insert>
+	
+	<update id="updateKey" parameterType="HashMap">
+		UPDATE MEMBER SET authkey=#{authkey} WHERE mem_email=#{mem_email}
+	</update>
+	
+	<update id="updateStatus" parameterType="member">
+		UPDATE MEMBER SET authstatus='1' WHERE authkey=#{authkey} and mem_email=#{mem_email}
+	</update>
+	
+	<update id="updateAdmKey" parameterType="HashMap">
+	
+	</update>
+	
+	<update id="updateAdmStatus" parameterType="admin">
+	
+	</update>
+	
+	
+</mapper>
