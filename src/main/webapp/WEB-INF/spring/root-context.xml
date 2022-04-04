@@ -84,7 +84,7 @@
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
 		<property name="username" value="20171578@sungshin.ac.kr" />
-		<property name="password" value="TKDDJQLSL1!" />
+		<property name="password" value="비밀번호 입력" />
 
 		<property name="javaMailProperties">
 			<props>
