@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.exam.www.exception.AlreadyExistEmailException;
 import org.exam.www.exception.AlreadyExistIdException;
+import org.exam.www.model.AdministratorVO;
 import org.exam.www.model.MemberVO;
 import org.exam.www.repository.RegistDAO;
 import org.springframework.stereotype.Service;
@@ -47,4 +48,13 @@ public class RegistServiceImpl implements RegistService{
 	public void updateStatus(MemberVO member) {
 		registDAO.updateStatus(member);
 	}
+	
+	@Override
+	public void admRegist(AdministratorVO admin) {};
+	
+	@Override
+	public void updateAdmKey(HashMap<String,String> map) {};
+	
+	@Override
+	public void updateAdmStatus(AdministratorVO admin) {};
 }

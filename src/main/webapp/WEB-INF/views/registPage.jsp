@@ -2,13 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ page import="java.net.URLEncoder"%>
+<%@ page import="java.security.SecureRandom"%>
+<%@ page import="java.math.BigInteger"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>BiBlet 회원가입</title>
 <script type="text/javascript">
-	function fnChkByte(obj, maxByte,id) {
+	function fnChkByte(obj, maxByte, id) {
 		var str = obj.value;
 		var str_len = str.length;
 		var input = document.getElementById(id);
@@ -36,10 +39,17 @@
 			fnChkByte(obj, maxByte);
 		} else {
 			input.innerText = rbyte;
-			
+
 		}
 	}
 </script>
+
+<!-- 네이버 api -->
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+	charset="utf-8"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 	<h1>회원 가입</h1>
@@ -55,28 +65,44 @@
 		<div>
 			<label>아이디</label>
 			<form:input path="mem_id" limitbyte="100"
-				placeholder="한글 33자, 영문100자 이내" 
-				onKeyUp="javascript:fnChkByte(this,'100','byteInfo2')"/>
-				<span id="byteInfo2">0</span> / 100bytes
+				placeholder="한글 33자, 영문100자 이내"
+				onKeyUp="javascript:fnChkByte(this,'100','byteInfo2')" />
+			<span id="byteInfo2">0</span> / 100bytes
 			<form:errors path="mem_id" />
 		</div>
 		<div>
 			<label>비밀번호</label>
 			<form:input type="password" path="mem_pass" limitbyte="200"
-				placeholder="한글66자, 영문200자 이내" 
-				onKeyUp="javascript:fnChkByte(this,'200','byteInfo3')"/>
-				<span id="byteInfo3">0</span> / 200bytes
+				placeholder="한글66자, 영문200자 이내"
+				onKeyUp="javascript:fnChkByte(this,'200','byteInfo3')" />
+			<span id="byteInfo3">0</span> / 200bytes
 			<form:errors path="mem_pass" />
 		</div>
 		<div>
 			<label>이메일</label>
-			<form:input path="mem_email"/>
+			<form:input path="mem_email" />
 			<form:errors path="mem_email" />
 		</div>
 
 		<div>
 			<input type="submit" value="회원가입" />
 		</div>
+
+		<!-- 네이버 로그인 버튼 노출 영역 -->
+		<%
+			String clientId = "d49IDn_y2lOLJI_iR5pL";//애플리케이션 클라이언트 아이디값";
+		String redirectURI = URLEncoder.encode("http://localhost:8080/www/home", "UTF-8");
+		SecureRandom random = new SecureRandom();
+		String state = new BigInteger(130, random).toString();
+		String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+		apiURL += "&client_id=" + clientId;
+		apiURL += "&redirect_uri=" + redirectURI;
+		apiURL += "&state=" + state;
+		session.setAttribute("state", state);
+		%>
+		<a href="<%=apiURL%>"><img height="50"
+			src="http://static.nid.naver.com/oauth/small_g_in.PNG" /></a>
+
 	</form:form>
 </body>
 </html>

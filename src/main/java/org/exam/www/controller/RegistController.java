@@ -2,6 +2,9 @@ package org.exam.www.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.exam.www.exception.AlreadyExistEmailException;
 import org.exam.www.exception.AlreadyExistIdException;
 import org.exam.www.model.MemberVO;
@@ -28,7 +31,7 @@ public class RegistController {
 	//ㄴ기본생성자생성 후 setter에 @Autowired줘도됨
 	
 	@RequestMapping(value="/registPage",method=RequestMethod.GET)
-	public String memRegistPage(@ModelAttribute("member")MemberVO member) {
+	public String memRegistPage(@ModelAttribute("member")MemberVO member,HttpSession session) {
 		return "/registPage";
 	}
 	
@@ -67,6 +70,11 @@ public class RegistController {
 		member.setAuthstatus(1);
 		registService.updateStatus(member);
 		return "/regist_confirm";
+	}
+	
+	@RequestMapping(value="/home")
+	public String goHome(HttpServletRequest request) throws Exception {
+		return "/home";
 	}
 	
 	

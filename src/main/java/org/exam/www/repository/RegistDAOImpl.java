@@ -2,6 +2,7 @@ package org.exam.www.repository;
 
 import java.util.HashMap;
 
+import org.exam.www.model.AdministratorVO;
 import org.exam.www.model.MemberVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -40,4 +41,13 @@ public class RegistDAOImpl implements RegistDAO{
 		int idChkResult=sqlSessionTemplate.selectOne("memIdChk",mem_id);
 		return idChkResult;
 	}
+	
+	@Override
+	public void admRegist(AdministratorVO admin) {};
+	
+	@Override
+	public void updateAdmKey(HashMap<String,String> map) {};
+	
+	@Override
+	public void updateAdmStatus(AdministratorVO admin) {};
 }

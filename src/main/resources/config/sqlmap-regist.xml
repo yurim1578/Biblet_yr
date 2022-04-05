@@ -12,30 +12,38 @@
 	</insert>
 
 	<insert id="admRegist" parameterType="admin">
-	
+		INSERT INTO ADMINISTRATOR
+		(adm_num,adm_name,adm_id,adm_pass,adm_regdate,adm_email)
+		VALUES
+		(ADMINISTRATOR_SEQ.nextval,#{adm_name},#{adm_id},#{adm_pass},sysdate,#{adm_email})
 	</insert>
-	
+
 	<update id="updateKey" parameterType="HashMap">
-		UPDATE MEMBER SET authkey=#{authkey} WHERE mem_email=#{mem_email}
+		UPDATE MEMBER SET
+		authkey=#{authkey} WHERE mem_email=#{mem_email}
 	</update>
-	
+
 	<update id="updateStatus" parameterType="member">
-		UPDATE MEMBER SET authstatus='1' WHERE authkey=#{authkey} and mem_email=#{mem_email}
+		UPDATE MEMBER SET
+		authstatus='1' WHERE authkey=#{authkey} and mem_email=#{mem_email}
 	</update>
-	
+
 	<update id="updateAdmKey" parameterType="HashMap">
-	
+		UPDATE ADMINISTRATOR SET
+		authkey=#{authkey} WHERE adm_email=#{adm_email}
 	</update>
-	
+
 	<update id="updateAdmStatus" parameterType="admin">
-	
+		UPDATE ADMINISTRATOR SET
+		authstatus='1' WHERE authkey=#{authkey} and adm_email=#{adm_email}
 	</update>
-	
+
 	<select id="memEmailChk" parameterType="String" resultType="int">
 		SELECT COUNT(*) FROM MEMBER WHERE mem_email=#{mem_email}
 	</select>
-	
+
 	<select id="memIdChk" parameterType="String" resultType="int">
-		SELECT COUNT(*) FROM MEMBER WHERE mem_id=#{mem_id}
+		SELECT
+		COUNT(*) FROM MEMBER WHERE mem_id=#{mem_id}
 	</select>
 </mapper>
