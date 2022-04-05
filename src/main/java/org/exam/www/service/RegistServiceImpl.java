@@ -2,6 +2,8 @@ package org.exam.www.service;
 
 import java.util.HashMap;
 
+import org.exam.www.exception.AlreadyExistEmailException;
+import org.exam.www.exception.AlreadyExistIdException;
 import org.exam.www.model.MemberVO;
 import org.exam.www.repository.RegistDAO;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,22 @@ public class RegistServiceImpl implements RegistService{
 	
 	@Override
 	public void memRegist(MemberVO member) {
-		System.out.println();
+		
+		
+		String mem_email=member.getMem_email();
+		int emailChkResult=registDAO.memEmailChk(mem_email);
+		
+		if(emailChkResult==1) {
+			throw new AlreadyExistEmailException();
+		}
+		
+		String mem_id=member.getMem_id();
+		int idChkResult=registDAO.memIdChk(mem_id);
+		
+		if(idChkResult==1) {
+			throw new AlreadyExistIdException();
+		}
+		
 		registDAO.memRegist(member);
 	}
 	

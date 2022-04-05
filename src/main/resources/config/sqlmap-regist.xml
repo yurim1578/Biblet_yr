@@ -6,9 +6,9 @@
 
 	<insert id="memRegist" parameterType="member">
 		INSERT INTO MEMBER
-		(mem_num,mem_name,mem_id,mem_pass,mem_nickname,mem_regdate,mem_email)
+		(mem_num,mem_name,mem_id,mem_pass,mem_regdate,mem_email)
 		VALUES
-		(MEMBER_SEQ.nextval,#{mem_name},#{mem_id},#{mem_pass},#{mem_nickname},sysdate,#{mem_email})
+		(MEMBER_SEQ.nextval,#{mem_name},#{mem_id},#{mem_pass},sysdate,#{mem_email})
 	</insert>
 
 	<insert id="admRegist" parameterType="admin">
@@ -31,5 +31,11 @@
 	
 	</update>
 	
+	<select id="memEmailChk" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE mem_email=#{mem_email}
+	</select>
 	
+	<select id="memIdChk" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM MEMBER WHERE mem_id=#{mem_id}
+	</select>
 </mapper>

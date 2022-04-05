@@ -96,4 +96,15 @@
 		</property>
 	</bean>
 
+	<!-- label.properties를 이용하는 MessageSource Bean을 만든다 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>message.message</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
 </beans>

@@ -7,24 +7,22 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class MemberVO {
 
 	private int mem_num;//sequence.nextval로 넣을 것
-	private String mem_name;
-	private String mem_id;
-	private String mem_pass;
-	private String mem_nickname;
+	private String mem_name;//50->한글6글자,영어50자
+	private String mem_id;//100->한글33자,영어100자
+	private String mem_pass;//200->한글 66자,영어200자
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date mem_regdate;
-	private String mem_email;
+	private String mem_email;//200->한글 66자,영어200자
 	private String mem_pic;//null값이어도 됨
 	private String authkey;//null값이어도 됨
 	private int authstatus;//default=0 => 인증 후 =1
 	
 	public MemberVO() {}
 	
-	public MemberVO(String mem_name,String mem_id,String mem_pass,String mem_nickname,String mem_email) {
+	public MemberVO(String mem_name,String mem_id,String mem_pass,String mem_email) {
 		this.mem_name=mem_name;
 		this.mem_id=mem_id;
 		this.mem_pass=mem_pass;
-		this.mem_nickname=mem_nickname;
 		this.mem_email=mem_email;
 	}
 	
@@ -52,12 +50,7 @@ public class MemberVO {
 	public void setMem_pass(String mem_pass) {
 		this.mem_pass = mem_pass;
 	}
-	public String getMem_nickname() {
-		return mem_nickname;
-	}
-	public void setMem_nickname(String mem_nickname) {
-		this.mem_nickname = mem_nickname;
-	}
+	
 	public Date getMem_regdate() {
 		return mem_regdate;
 	}
@@ -92,7 +85,7 @@ public class MemberVO {
 	@Override
 	public String toString() {
 		return "MemberVO [mem_num=" + mem_num + ", mem_name=" + mem_name + ", mem_id=" + mem_id + ", mem_pass="
-				+ mem_pass + ", mem_nickname=" + mem_nickname + ", mem_regdate=" + mem_regdate + ", mem_email="
+				+ mem_pass + ", mem_regdate=" + mem_regdate + ", mem_email="
 				+ mem_email + ", mem_pic=" + mem_pic + ", authkey=" + authkey + ", authstatus=" + authstatus + "]";
 	}
 	

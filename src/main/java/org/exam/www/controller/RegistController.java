@@ -2,11 +2,14 @@ package org.exam.www.controller;
 
 import java.util.HashMap;
 
+import org.exam.www.exception.AlreadyExistEmailException;
+import org.exam.www.exception.AlreadyExistIdException;
 import org.exam.www.model.MemberVO;
 import org.exam.www.service.MailSendService;
 import org.exam.www.service.RegistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,8 +33,12 @@ public class RegistController {
 	}
 	
 	@RequestMapping(value="/registPage",method=RequestMethod.POST)
-	public String memRegist(@ModelAttribute("member")MemberVO member) {
+	public String memRegist(@ModelAttribute("member")MemberVO member,Errors errors) {
 		System.out.println(member.toString());
+		new AddValidator().validate(member, errors);
+		if(errors.hasErrors()) {
+			return "/registPage";
+		}
 		try {
 			registService.memRegist(member);
 			
@@ -45,10 +52,12 @@ public class RegistController {
 			
 			///DB에 authkey 업데이트
 			registService.updateKey(map);
-			
 			return "/member_check";
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch(AlreadyExistEmailException e) {
+			errors.rejectValue("mem_email", "alreadyExistEmail");
+			return "/registPage";
+		}catch(AlreadyExistIdException e) {
+			errors.rejectValue("mem_id", "alreadyExistId");
 			return "/registPage";
 		}
 	}

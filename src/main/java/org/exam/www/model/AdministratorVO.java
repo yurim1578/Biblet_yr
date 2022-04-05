@@ -9,7 +9,6 @@ public class AdministratorVO {
 	private int adm_num;
 	private String adm_name;
 	private String adm_id;
-	private String adm_nickname;
 	private String adm_pass;
 	@DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
 	private Date adm_regdate;
@@ -35,12 +34,7 @@ public class AdministratorVO {
 	public void setAdm_id(String adm_id) {
 		this.adm_id = adm_id;
 	}
-	public String getAdm_nickname() {
-		return adm_nickname;
-	}
-	public void setAdm_nickname(String adm_nickname) {
-		this.adm_nickname = adm_nickname;
-	}
+	
 	public String getAdm_pass() {
 		return adm_pass;
 	}
@@ -75,7 +69,7 @@ public class AdministratorVO {
 	@Override
 	public String toString() {
 		return "AdministratorVO [adm_num=" + adm_num + ", adm_name=" + adm_name + ", adm_id=" + adm_id
-				+ ", adm_nickname=" + adm_nickname + ", adm_pass=" + adm_pass + ", adm_regdate=" + adm_regdate
+			 + ", adm_pass=" + adm_pass + ", adm_regdate=" + adm_regdate
 				+ ", adm_email=" + adm_email + ", adm_authkey=" + adm_authkey + ", adm_authstatus=" + adm_authstatus
 				+ "]";
 	}

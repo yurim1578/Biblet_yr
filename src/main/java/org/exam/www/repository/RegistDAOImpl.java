@@ -28,4 +28,16 @@ public class RegistDAOImpl implements RegistDAO{
 	public void updateStatus(MemberVO member) {
 		sqlSessionTemplate.update("updateStatus",member);
 	}
+	
+	@Override
+	public int memEmailChk(String mem_email) {
+		int emailChkResult=sqlSessionTemplate.selectOne("memEmailChk",mem_email);
+		return emailChkResult;
+	}
+	
+	@Override
+	public int memIdChk(String mem_id) {
+		int idChkResult=sqlSessionTemplate.selectOne("memIdChk",mem_id);
+		return idChkResult;
+	}
 }
