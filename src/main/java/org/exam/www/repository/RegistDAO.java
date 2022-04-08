@@ -15,4 +15,6 @@ public interface RegistDAO {
 	public void admRegist(AdministratorVO admin);
 	public void updateAdmKey(HashMap<String,String> map);
 	public void updateAdmStatus(AdministratorVO admin);
+	public int admEmailChk(String adm_email);
+	public int admIdChk(String adm_id);
 }

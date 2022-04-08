@@ -2,20 +2,42 @@ package org.exam.www.model;
 
 import java.sql.Date;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class AdministratorVO {
 
 	private int adm_num;
+	@NotEmpty(message="필수 입력란 입니다.")
 	private String adm_name;
+	@NotEmpty(message="필수 입력란 입니다.")
 	private String adm_id;
+	@NotEmpty(message="필수 입력란 입니다.")
 	private String adm_pass;
 	@DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
 	private Date adm_regdate;
+	@NotEmpty(message="필수 입력란 입니다.")
+	@Email(message="올바른 이메일 형식이 아닙니다.")
 	private String adm_email;
 	private String adm_authkey;
-	private char adm_authstatus;
+	private int adm_authstatus;
+	@NotEmpty(message="필수 입력란 입니다.")
+	private String securitycode;
 	
+	
+	
+	public AdministratorVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public AdministratorVO(String adm_id, String adm_pass, String adm_email, String securitycode) {
+		super();
+		this.adm_id = adm_id;
+		this.adm_pass = adm_pass;
+		this.adm_email = adm_email;
+		this.securitycode = securitycode;
+	}
 	public int getAdm_num() {
 		return adm_num;
 	}
@@ -59,18 +81,25 @@ public class AdministratorVO {
 	public void setAdm_authkey(String adm_authkey) {
 		this.adm_authkey = adm_authkey;
 	}
-	public char getAdm_authstatus() {
+	public int getAdm_authstatus() {
 		return adm_authstatus;
 	}
-	public void setAdm_authstatus(char adm_authstatus) {
+	public void setAdm_authstatus(int adm_authstatus) {
 		this.adm_authstatus = adm_authstatus;
+	}
+	public String getSecuritycode() {
+		return securitycode;
+	}
+	public void setSecuritycode(String securitycode) {
+		this.securitycode = securitycode;
 	}
 	
 	@Override
 	public String toString() {
-		return "AdministratorVO [adm_num=" + adm_num + ", adm_name=" + adm_name + ", adm_id=" + adm_id
-			 + ", adm_pass=" + adm_pass + ", adm_regdate=" + adm_regdate
-				+ ", adm_email=" + adm_email + ", adm_authkey=" + adm_authkey + ", adm_authstatus=" + adm_authstatus
-				+ "]";
+		return "AdministratorVO [adm_num=" + adm_num + ", adm_name=" + adm_name + ", adm_id=" + adm_id + ", adm_pass="
+				+ adm_pass + ", adm_regdate=" + adm_regdate + ", adm_email=" + adm_email + ", adm_authkey="
+				+ adm_authkey + ", adm_authstatus=" + adm_authstatus + ", securitycode=" + securitycode + "]";
 	}
+	
+	
 }

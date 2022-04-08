@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.exam.www.exception.AlreadyExistEmailException;
 import org.exam.www.exception.AlreadyExistIdException;
+import org.exam.www.exception.SecurityCodeException;
 import org.exam.www.model.AdministratorVO;
 import org.exam.www.model.MemberVO;
 import org.exam.www.repository.RegistDAO;
@@ -50,11 +51,35 @@ public class RegistServiceImpl implements RegistService{
 	}
 	
 	@Override
-	public void admRegist(AdministratorVO admin) {};
+	public void admRegist(AdministratorVO admin) {
+		String adm_email=admin.getAdm_email();
+		int emailChkResult=registDAO.admEmailChk(adm_email);
+		
+		if(emailChkResult==1) {
+			throw new AlreadyExistEmailException();
+		}
+		
+		String adm_id=admin.getAdm_id();
+		int idChkResult=registDAO.admIdChk(adm_id);
+		
+		if(idChkResult==1) {
+			throw new AlreadyExistIdException();
+		}
+		
+		if(!admin.getSecuritycode().equals("ABC")) {
+			throw new SecurityCodeException();
+		}		
+		
+		registDAO.admRegist(admin);
+	};
 	
 	@Override
-	public void updateAdmKey(HashMap<String,String> map) {};
+	public void updateAdmKey(HashMap<String,String> map) {
+		registDAO.updateAdmKey(map);
+	};
 	
 	@Override
-	public void updateAdmStatus(AdministratorVO admin) {};
+	public void updateAdmStatus(AdministratorVO admin) {
+		registDAO.updateAdmStatus(admin);
+	};
 }

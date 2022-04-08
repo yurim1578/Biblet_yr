@@ -43,11 +43,29 @@ public class RegistDAOImpl implements RegistDAO{
 	}
 	
 	@Override
-	public void admRegist(AdministratorVO admin) {};
+	public void admRegist(AdministratorVO admin) {
+		sqlSessionTemplate.insert("admRegist",admin);
+	};
 	
 	@Override
-	public void updateAdmKey(HashMap<String,String> map) {};
+	public void updateAdmKey(HashMap<String,String> map) {
+		sqlSessionTemplate.update("updateAdmKey",map);
+	};
 	
 	@Override
-	public void updateAdmStatus(AdministratorVO admin) {};
+	public void updateAdmStatus(AdministratorVO admin) {
+		sqlSessionTemplate.update("updateAdmStatus",admin);
+	};
+	
+	@Override
+	public int admEmailChk(String adm_email) {
+		int emailChkResult=sqlSessionTemplate.selectOne("admEmailChk",adm_email);
+		return emailChkResult;
+	};
+	
+	@Override
+	public int admIdChk(String adm_id) {
+		int idChkResult=sqlSessionTemplate.selectOne("admIdChk",adm_id);
+		return idChkResult;
+	};
 }

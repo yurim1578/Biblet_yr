@@ -13,9 +13,9 @@
 
 	<insert id="admRegist" parameterType="admin">
 		INSERT INTO ADMINISTRATOR
-		(adm_num,adm_name,adm_id,adm_pass,adm_regdate,adm_email)
+		(adm_num,adm_name,adm_id,adm_pass,adm_regdate,adm_email,securitycode)
 		VALUES
-		(ADMINISTRATOR_SEQ.nextval,#{adm_name},#{adm_id},#{adm_pass},sysdate,#{adm_email})
+		(ADMINISTRATOR_SEQ.nextval,'abc',#{adm_id},#{adm_pass},sysdate,#{adm_email},#{securitycode})
 	</insert>
 
 	<update id="updateKey" parameterType="HashMap">
@@ -30,12 +30,12 @@
 
 	<update id="updateAdmKey" parameterType="HashMap">
 		UPDATE ADMINISTRATOR SET
-		authkey=#{authkey} WHERE adm_email=#{adm_email}
+		adm_authkey=#{adm_authkey} WHERE adm_email=#{adm_email}
 	</update>
 
 	<update id="updateAdmStatus" parameterType="admin">
 		UPDATE ADMINISTRATOR SET
-		authstatus='1' WHERE authkey=#{authkey} and adm_email=#{adm_email}
+		adm_authstatus='1' WHERE adm_authkey=#{adm_authkey} and adm_email=#{adm_email}
 	</update>
 
 	<select id="memEmailChk" parameterType="String" resultType="int">
@@ -45,5 +45,14 @@
 	<select id="memIdChk" parameterType="String" resultType="int">
 		SELECT
 		COUNT(*) FROM MEMBER WHERE mem_id=#{mem_id}
+	</select>
+	
+	<select id="admEmailChk" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM ADMINISTRATOR WHERE adm_email=#{adm_email}
+	</select>
+
+	<select id="admIdChk" parameterType="String" resultType="int">
+		SELECT
+		COUNT(*) FROM ADMINISTRATOR WHERE adm_id=#{adm_id}
 	</select>
 </mapper>

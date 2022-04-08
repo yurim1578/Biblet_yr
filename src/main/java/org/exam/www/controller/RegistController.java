@@ -4,9 +4,12 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.exam.www.exception.AlreadyExistEmailException;
 import org.exam.www.exception.AlreadyExistIdException;
+import org.exam.www.exception.SecurityCodeException;
+import org.exam.www.model.AdministratorVO;
 import org.exam.www.model.MemberVO;
 import org.exam.www.service.MailSendService;
 import org.exam.www.service.RegistService;
@@ -36,9 +39,9 @@ public class RegistController {
 	}
 	
 	@RequestMapping(value="/registPage",method=RequestMethod.POST)
-	public String memRegist(@ModelAttribute("member")MemberVO member,Errors errors) {
+	public String memRegist(@Valid@ModelAttribute("member")MemberVO member,Errors errors) {
 		System.out.println(member.toString());
-		new AddValidator().validate(member, errors);
+		//new AddValidator().validate(member, errors);
 		if(errors.hasErrors()) {
 			return "/registPage";
 		}
@@ -77,5 +80,47 @@ public class RegistController {
 		return "/home";
 	}
 	
+	@RequestMapping(value="/admRegistPage",method=RequestMethod.GET)
+	public String admRegistPage(@ModelAttribute("admin")AdministratorVO admin,HttpSession session) {
+		return "admRegistPage";
+	}
 	
+	@RequestMapping(value="/admRegistPage",method=RequestMethod.POST)
+	public String admRegist(@Valid@ModelAttribute("admin")AdministratorVO admin,Errors errors) {
+		//new AddValidator().validate(admin, errors);
+		if(errors.hasErrors()) {
+			return "/admRegistPage";
+		}
+		
+		try {
+			registService.admRegist(admin);
+			
+			String adm_authkey=mailSendService.sendAdmAuthMail(admin.getAdm_email());
+			System.out.println(admin.toString());
+			admin.setAdm_authkey(adm_authkey);
+			
+			HashMap<java.lang.String,java.lang.String> map=new HashMap<String,String>();
+			map.put("adm_email", admin.getAdm_email());
+			map.put("adm_authkey", admin.getAdm_authkey());
+			
+			registService.updateAdmKey(map);
+			return "/member_check";
+		}catch(AlreadyExistEmailException e) {
+			errors.rejectValue("adm_email", "alreadyExistEmail");
+			return "/admRegistPage";
+		}catch(AlreadyExistIdException e) {
+			errors.rejectValue("adm_id", "alreadyExistId");
+			return "/admRegistPage";
+		}catch(SecurityCodeException e) {
+			errors.rejectValue("securitycode", "SecurityCodeException");
+			return "/admRegistPage";
+		}
+	}
+	
+	@RequestMapping("/admregistconfirm")
+	public String admConfirm(@ModelAttribute("admin")AdministratorVO admin) {
+		admin.setAdm_authstatus(1);
+		registService.updateAdmStatus(admin);
+		return "/regist_confirm";
+	}
 }

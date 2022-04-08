@@ -27,7 +27,7 @@ public class MailSendService {
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
 		mailSender.setUsername("bookperi99@gmail.com");
-		mailSender.setPassword("비밀번호 입력");
+		mailSender.setPassword("비밀번호");
 		mailSender.setDefaultEncoding("utf-8");
 		mailSender.setJavaMailProperties(properties);
 	}
@@ -54,6 +54,28 @@ public class MailSendService {
 			sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>").append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
 					.append("<a href='http://localhost:8080/www/registconfirm?mem_email=").append(email)
 					.append("&authkey=").append(authKey).append("' target='_blenk'>이메일 인증 확인</a>").toString());
+			sendMail.setFrom("bookperi99@gmail.com", "관리자");
+			sendMail.setTo(email);
+			sendMail.send();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		return authKey;
+	}
+	
+	//관리자 인증메일 보내기
+	public String sendAdmAuthMail(String email) {
+		String authKey = getAuthCode(6);
+
+		try {
+			MailUtils sendMail = new MailUtils(mailSender);
+			sendMail.setSubject("관리자가입 이메일 인증");
+			sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>").append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
+					.append("<a href='http://localhost:8080/www/admregistconfirm?adm_email=").append(email)
+					.append("&adm_authkey=").append(authKey).append("' target='_blenk'>이메일 인증 확인</a>").toString());
 			sendMail.setFrom("bookperi99@gmail.com", "관리자");
 			sendMail.setTo(email);
 			sendMail.send();
