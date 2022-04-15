@@ -323,6 +323,7 @@ dd.hidden {
 			});
 
 		})
+		<!-- jquery로 ajax요청해서 받아온 값으로 테이블에 값넣기-->
 	</script>
 </body>
 </html>
