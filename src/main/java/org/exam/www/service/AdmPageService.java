@@ -1,4 +1,4 @@
-package org.exam.www.repository;
+package org.exam.www.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,10 +7,10 @@ import org.exam.www.model.AdministratorVO;
 import org.exam.www.model.CommandListAppr;
 import org.exam.www.model.MemberVO;
 
-public interface AdministratorpageDAO {
+public interface AdmPageService {
 	public List<MemberVO> listOfMember();
 	public int countMember();
-	public int deleteMember(HashMap<String,Object> map);
+	public int delete(HashMap<String,Object> map);
 	public List<MemberVO> searchMember(MemberVO member);
 	
 	public List<AdministratorVO> listOfAdmin();

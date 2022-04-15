@@ -24,6 +24,9 @@ public class MemberVO {
 	private String authkey;//null값이어도 됨
 	private int authstatus;//default=0 => 인증 후 =1
 	
+	private String keyword;
+	private String option;
+	
 	public MemberVO() {}
 	
 	public MemberVO(String mem_name,String mem_id,String mem_pass,String mem_email) {
@@ -89,11 +92,29 @@ public class MemberVO {
 		this.authstatus = authstatus;
 	}
 	
+	
+	
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public String getOption() {
+		return option;
+	}
+
+	public void setOption(String option) {
+		this.option = option;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberVO [mem_num=" + mem_num + ", mem_name=" + mem_name + ", mem_id=" + mem_id + ", mem_pass="
 				+ mem_pass + ", mem_regdate=" + mem_regdate + ", mem_email="
-				+ mem_email + ", mem_pic=" + mem_pic + ", authkey=" + authkey + ", authstatus=" + authstatus + "]";
+				+ mem_email + ", mem_pic=" + mem_pic + ", authkey=" + authkey + ", authstatus=" + authstatus +", option=" + option +", keyword=" + keyword + "]";
 	}
 	
 	

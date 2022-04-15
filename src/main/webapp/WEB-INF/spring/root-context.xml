@@ -55,6 +55,7 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath:config/sqlmap-regist.xml</value>
+				<value>classpath:config/sqlmap-administrator.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -74,6 +75,14 @@
 		<property name="registDAO" ref="registDAO"></property>
 	</bean>
 
+	<bean id="administratorpageDAO" class="org.exam.www.repository.AdministratorpageDAOImpl">
+		<constructor-arg ref="sqlSessionTemplate"/>
+	</bean>
+	
+<!-- 	<bean id="admPageServcie" class="org.exam.www.service.AdmPageServiceImpl">
+		<property name="administratorpageDAO" ref="administratorpageDAO"/>
+	</bean>
+ -->
 	<bean id="emailSendService"
 		class="org.exam.www.service.MailSendService">
 	</bean>

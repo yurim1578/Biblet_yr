@@ -27,7 +27,7 @@ public class MailSendService {
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(587);
 		mailSender.setUsername("bookperi99@gmail.com");
-		mailSender.setPassword("비밀번호");
+		mailSender.setPassword("tkddjqlsl1!");
 		mailSender.setDefaultEncoding("utf-8");
 		mailSender.setJavaMailProperties(properties);
 	}

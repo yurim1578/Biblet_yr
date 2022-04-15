@@ -15,7 +15,7 @@ public class AdministratorVO {
 	private String adm_id;
 	@NotEmpty(message="필수 입력란 입니다.")
 	private String adm_pass;
-	@DateTimeFormat(pattern="yyyy-MM-dd hh:mm")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date adm_regdate;
 	@NotEmpty(message="필수 입력란 입니다.")
 	@Email(message="올바른 이메일 형식이 아닙니다.")
@@ -25,7 +25,8 @@ public class AdministratorVO {
 	@NotEmpty(message="필수 입력란 입니다.")
 	private String securitycode;
 	
-	
+	private String admKeyword;
+	private String admOption;
 	
 	public AdministratorVO() {
 		super();
@@ -94,11 +95,24 @@ public class AdministratorVO {
 		this.securitycode = securitycode;
 	}
 	
+	
+	public String getAdmKeyword() {
+		return admKeyword;
+	}
+	public void setAdmKeyword(String admKeyword) {
+		this.admKeyword = admKeyword;
+	}
+	public String getAdmOption() {
+		return admOption;
+	}
+	public void setAdmOption(String admOption) {
+		this.admOption = admOption;
+	}
 	@Override
 	public String toString() {
 		return "AdministratorVO [adm_num=" + adm_num + ", adm_name=" + adm_name + ", adm_id=" + adm_id + ", adm_pass="
 				+ adm_pass + ", adm_regdate=" + adm_regdate + ", adm_email=" + adm_email + ", adm_authkey="
-				+ adm_authkey + ", adm_authstatus=" + adm_authstatus + ", securitycode=" + securitycode + "]";
+				+ adm_authkey + ", adm_authstatus=" + adm_authstatus + ", securitycode=" + securitycode + ", admOption=" + admOption +", admKeyword=" + admKeyword +"]";
 	}
 	
 	

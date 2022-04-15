@@ -7,15 +7,15 @@
 	<settings>
 		<setting name="cacheEnabled" value="false" />
 		<setting name="useGeneratedKeys" value="false" />
-		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="mapUnderscoreToCamelCase" value="false" />
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	<typeAliases>
 		<typeAlias alias="admin" type="org.exam.www.model.AdministratorVO"/>
 		<typeAlias alias="appraisal" type="org.exam.www.model.AppraisalVO"/>
-		<typeAlias alias="bookinfo" type="org.exam.www.model.BookinfoVO"/>
 		<typeAlias alias="bookshelf" type="org.exam.www.model.BookshelfVO"/>
 		<typeAlias alias="member" type="org.exam.www.model.MemberVO" />
+		<typeAlias alias="loa" type="org.exam.www.model.CommandListAppr"/>
 	</typeAliases>
 	<!-- sql문에서 자료형 지정할때 쓰는 이름 -->
 </configuration>
