@@ -2,6 +2,7 @@ package org.exam.www.model;
 
 public class CommandListAppr {
 
+	private int appraisal_num;
 	private String mem_id;
 	private String book_comment;
 	private int star;
@@ -9,6 +10,13 @@ public class CommandListAppr {
 	private String CoKeyword;
 	private String CoOption;
 	
+	
+	public int getAppraisal_num() {
+		return appraisal_num;
+	}
+	public void setAppraisal_num(int appraisal_num) {
+		this.appraisal_num = appraisal_num;
+	}
 	public String getMem_id() {
 		return mem_id;
 	}

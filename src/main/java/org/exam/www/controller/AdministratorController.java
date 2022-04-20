@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdministratorController {
@@ -71,6 +72,7 @@ public class AdministratorController {
 //		return "/administratorPage";
 //	}
 
+	//@ResponseBody 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String searchInfo(@ModelAttribute("member") MemberVO member, @ModelAttribute("admin") AdministratorVO admin,
 			@ModelAttribute("appr") CommandListAppr appr,Model model) throws Exception {
@@ -98,15 +100,19 @@ public class AdministratorController {
 		int memcount = admPageService.countMember();
 		model.addAttribute("memcount", memcount);
 		
+		//평가 정보 전달
+		List<CommandListAppr> apprList = admPageService.listOfAppraisal();
+		model.addAttribute("apprList", apprList);
+		
+		int starcount = admPageService.countStar();
+		model.addAttribute("starcount", starcount);
+		
 		//코멘트 검색
 		List<CommandListAppr> searchApprList=admPageService.searchComments(appr);
 		model.addAttribute("searchApprList", searchApprList);
 		
 		int commentcount=admPageService.countComment();
 		model.addAttribute("commentcount", commentcount);
-		
-		int starcount=admPageService.countStar();
-		model.addAttribute("starcount", starcount);
 		
 		//관리자 검색
 		List<AdministratorVO> searchAdmList = admPageService.searchAdmin(admin);
@@ -136,6 +142,12 @@ public class AdministratorController {
 		model.addAttribute("mem_num", mem_num);
 		return "/deleteMember";
 	}
+	
+	@RequestMapping(value="/adminPage/deleteComment/{appraisal_num}",method=RequestMethod.GET)
+	public String deleteComment(@PathVariable int appraisal_num,Model model) {
+		model.addAttribute("appraisal_num",appraisal_num);
+		return "/deleteComment";
+	}
 
 	@RequestMapping(value = "/adminpage/deleteMember", method = RequestMethod.POST)
 	public String delete(int mem_num, String adm_pass, String adm_email, Model model) {
@@ -159,10 +171,36 @@ public class AdministratorController {
 			model.addAttribute("msg", "관리자 비밀번호가 일치하지 않습니다.");
 			return "/deleteMember";
 		} else {
-			return "redirect:/tmpAdminPage";
+			return "redirect:/adminPage";
 		}
 	}
 
+	
+	@RequestMapping(value = "/adminpage/deleteComment", method = RequestMethod.POST)
+	public String deleteComment(int appraisal_num, String adm_pass, String adm_email, Model model) {
+		int rowCount;
+		CommandListAppr appr= new CommandListAppr();
+		appr.setAppraisal_num(appraisal_num);
+		AdministratorVO admin = new AdministratorVO();
+		admin.setAdm_email(adm_email);
+		admin.setAdm_pass(adm_pass);
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("APPRAISAL_NUM", appr.getAppraisal_num());// sqlmapper에 이름과 map의 key값이 같아야함
+		map.put("ADM_EMAIL", admin.getAdm_email());
+		map.put("ADM_PASS", admin.getAdm_pass());
+
+		// System.out.println(map);
+		rowCount = admPageService.deleteComment(map);
+
+		if (rowCount == 0) {
+			model.addAttribute("appraisal_num", appraisal_num);
+			model.addAttribute("msg", "관리자 비밀번호가 일치하지 않습니다.");
+			return "/deleteComment";
+		} else {
+			return "redirect:/adminPage";
+		}
+	}
 //	@RequestMapping(value = "/adminPageStar", method = RequestMethod.POST)
 //	public String listOfStar(Model model) {
 //		List<CommandListAppr> apprList = admPageService.listOfAppraisal();

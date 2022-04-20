@@ -72,4 +72,9 @@ private SqlSessionTemplate sqlSessionTemplate;
 	public int countComment() {
 		return sqlSessionTemplate.selectOne("countComment");
 	}
+	
+	@Override
+	public int deleteComment(HashMap<String,Object> map) {
+		return sqlSessionTemplate.delete("deleteComment", map);
+	};
 }

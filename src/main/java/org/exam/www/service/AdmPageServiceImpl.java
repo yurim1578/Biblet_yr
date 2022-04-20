@@ -74,4 +74,10 @@ public class AdmPageServiceImpl implements AdmPageService{
 	public List<CommandListAppr> searchComments(CommandListAppr loa){
 		return administratorpageDAO.searchComments(loa);
 	};
+	
+	@Override
+	public int deleteComment(HashMap<String,Object> map) {
+		int result=administratorpageDAO.deleteComment(map);
+		return result;
+	};
 }

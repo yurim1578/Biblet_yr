@@ -37,9 +37,7 @@ dd.hidden {
 	display: none;
 }
 </style>
-<script src="http://code.jquery.com/jquery-3.5.1.js"
-	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-	crossorigin="anonymous"></script>
+
 
 <title>관리자 페이지</title>
 </head>
@@ -122,45 +120,18 @@ dd.hidden {
 					<th>별점</th>
 
 				</tr>
-				<c:forEach var="appr" items="${apprList}">
+				<tbody id="dynamicTbody">
 
-					<c:if test="${0 ne appr.star}">
-						<input type="hidden" name="isbn" id="isbn" value="${appr.isbn}" />
-						<tr>
-							<td>${appr.mem_id }님의평가입니다.</td>
-							<td><div id="book_name"></div></td>
-							<td><div id="author"></div></td>
-							<td><div id="publisher"></div></td>
-							<td><c:if test="${appr.star==1 }">★☆☆☆☆</c:if> <c:if
-									test="${appr.star==2 }">★★☆☆☆</c:if> <c:if
-									test="${appr.star==3 }">★★★☆☆</c:if> <c:if
-									test="${appr.star==4 }">★★★★☆</c:if> <c:if
-									test="${appr.star==5 }">★★★★★</c:if></td>
-						</tr>
-					</c:if>
-
-				</c:forEach>
-
+				</tbody>
+				
 				<c:if test="${! empty searchApprList }">
+					
+					<tbody id="dynamicTbody">
 
-					<c:forEach var="appr" items="${searchApprList}">
-						<c:if test="${0 ne appr.star}">
-							<input type="hidden" name="isbn" id="isbn" value="${appr.isbn}" />
-							<tr>
-								<td>${appr.mem_id }님의평가입니다.</td>
-								<td><div id="book_name"></div></td>
-								<td><div id="author"></div></td>
-								<td><div id="publisher"></div></td>
-								<td><c:if test="${appr.star==1 }">★☆☆☆☆</c:if> <c:if
-										test="${appr.star==2 }">★★☆☆☆</c:if> <c:if
-										test="${appr.star==3 }">★★★☆☆</c:if> <c:if
-										test="${appr.star==4 }">★★★★☆</c:if> <c:if
-										test="${appr.star==5 }">★★★★★</c:if></td>
-							</tr>
-						</c:if>
-					</c:forEach>
-
+					</tbody>
 				</c:if>
+				
+				
 			</table>
 		</dd>
 
@@ -182,36 +153,17 @@ dd.hidden {
 					<th>작가</th>
 					<th>출판사</th>
 					<th>코멘트</th>
+					<th>코멘트 강제 삭제</th>
 				</tr>
 
-				<c:forEach var="comm" items="${commentList}">
-					<c:if test="${! empty comm.book_comment}">
-						<input type="hidden" name="isbn_c" id="isbn_c"
-							value="${comm.isbn}" />
-						<tr>
-							<td>${comm.mem_id }님의코멘트입니다.</td>
-							<td><div id="book_name_c"></div></td>
-							<td><div id="author_c"></div></td>
-							<td><div id="publisher_c"></div></td>
-							<td>${comm.book_comment}</td>
-						</tr>
-					</c:if>
-				</c:forEach>
+				<tbody id="dynamicTbody2">
 
+				</tbody>
+				
 				<c:if test="${! empty searchApprList }">
-					<c:forEach var="comm" items="${searchApprList}">
-						<c:if test="${! empty comm.book_comment}">
-							<input type="hidden" name="isbn_c" id="isbn_c"
-								value="${comm.isbn}" />
-							<tr>
-								<td>${comm.mem_id }님의코멘트입니다.</td>
-								<td><div id="book_name_c"></div></td>
-								<td><div id="author_c"></div></td>
-								<td><div id="publisher_c"></div></td>
-								<td>${comm.book_comment}</td>
-							</tr>
-						</c:if>
-					</c:forEach>
+					<tbody id="dynamicTbody2">
+
+					</tbody>
 				</c:if>
 			</table>
 		</dd>
@@ -266,48 +218,28 @@ dd.hidden {
 					</c:forEach>
 				</c:if>
 			</table>
-			남은 할일 : 페이징 처리
 		</dd>
 	</dl>
-	<script>
+
+	<script src="http://code.jquery.com/jquery-3.5.1.js"
+		integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+		crossorigin="anonymous"></script>
+
+<script>
 		var $menuEle = $('dt'); // 탭메뉴를 변수에 지정
 		$menuEle.click(function() { // 탭메뉴 클릭 이벤트
 			$('dd').addClass('hidden');
 			$(this).next().removeClass('hidden');
-		})
-	</script>
-	<script>
-		$(document).ready(function() {
-
-			var pageNum = 1;
-
-			$.ajax({ //카카오 검색요청 / [요청]
-				method : "GET",
-				url : "https://dapi.kakao.com/v3/search/book",
-				data : {
-					query : $("#isbn").val(),
-					page : pageNum
-				},
-				headers : {
-					Authorization : "KakaoAK 6f9ab74953bbcacc4423564a74af264e"
-				}
-
-			}).done(function(msg) { //검색 결과 담기 / [응답]
-				console.log(msg);
-				$("#book_name").append(msg.documents[0].title); //제목
-				$("#author").append(msg.documents[0].authors); //저자	
-				$("#publisher").append(msg.documents[0].publisher); //출판사
-
-			});
-
-		})
-		$(document).ready(function() {
+		});
+	
+		
+		function bookinfo(isbn, mem_id, star) {
 			var pageNum = 1;
 			$.ajax({ //카카오 검색요청 / [요청]
 				method : "GET",
 				url : "https://dapi.kakao.com/v3/search/book",
 				data : {
-					query : $("#isbn_c").val(),
+					query : isbn,
 					page : pageNum
 				},
 				headers : {
@@ -317,13 +249,77 @@ dd.hidden {
 
 			.done(function(msg) { //검색 결과 담기 / [응답]
 				console.log(msg);
-				$("#book_name_c").append(msg.documents[0].title); //제목
-				$("#author_c").append(msg.documents[0].authors); //저자	
-				$("#publisher_c").append(msg.documents[0].publisher); //출판사
+				var html='';
+				html +='<tr>';
+				html +='<td>'+mem_id+'</td>';
+				html +='<td>'+msg.documents[0].title+'</td>';
+				html +='<td>'+msg.documents[0].authors+'</td>';
+				html +='<td>'+msg.documents[0].publisher+'</td>';
+				html +='<td>'+star+'</td>';
+				html +='<tr>';
+				$("#dynamicTbody").append(html);
 			});
+		};
+		
+		function bookinfo2(isbn, mem_id, comment,appr_num) {
+			var pageNum = 1;
+			$.ajax({ //카카오 검색요청 / [요청]
+				method : "GET",
+				url : "https://dapi.kakao.com/v3/search/book",
+				data : {
+					query : isbn,
+					page : pageNum
+				},
+				headers : {
+					Authorization : "KakaoAK 6f9ab74953bbcacc4423564a74af264e"
+				}
+			})
 
-		})
-		<!-- jquery로 ajax요청해서 받아온 값으로 테이블에 값넣기-->
+			.done(function(msg) { //검색 결과 담기 / [응답]
+				console.log(msg);
+				var html='';
+				html +='<tr>';
+				html +='<td>'+mem_id+'</td>';
+				html +='<td>'+msg.documents[0].title+'</td>';
+				html +='<td>'+msg.documents[0].authors+'</td>';
+				html +='<td>'+msg.documents[0].publisher+'</td>';
+				html +='<td>'+comment+'</td>';
+				html +='<td><a href="<c:url value="/adminPage/deleteComment/'+appr_num+'"/>"><button>강제 삭제</button></a></td>';
+				html +='<tr>';
+				$("#dynamicTbody2").append(html);
+			});
+		};
+		
+	$(document).ready(function(){
+		<c:forEach var="appr" items="${apprList}">
+			<c:if test="${0 ne appr.star}">
+				<c:if test="${appr.star==1 }">var star='★☆☆☆☆';</c:if> 
+				<c:if test="${appr.star==2 }">var star='★★☆☆☆';</c:if> 
+				<c:if test="${appr.star==3 }">var star='★★★☆☆';</c:if> 
+				<c:if test="${appr.star==4 }">var star='★★★★☆';</c:if> 
+				<c:if test="${appr.star==5 }">var star='★★★★★';</c:if>
+				bookinfo("${appr.isbn}", "${appr.mem_id }", star);
+			</c:if>
+		</c:forEach>
+		
+		
+	
+		<c:forEach var="comm" items="${commentList}">
+			<c:if test="${! empty comm.book_comment}">
+				bookinfo2("${comm.isbn}","${comm.mem_id}","${comm.book_comment}","${comm.appraisal_num}")		
+			</c:if>
+		</c:forEach>
+		
+		<c:forEach var="comm" items="${searchApprList}">
+		<c:if test="${! empty comm.book_comment}">
+			bookinfo2("${comm.isbn}","${comm.mem_id}","${comm.book_comment}","${comm.appraisal_num}")		
+		</c:if>
+	</c:forEach>
+		
+		
+	});
+	
+	
 	</script>
 </body>
 </html>

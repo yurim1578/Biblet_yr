@@ -21,4 +21,5 @@ public interface AdmPageService {
 	public int countStar();
 	public int countComment();
 	public List<CommandListAppr> searchComments(CommandListAppr loa);
+	public int deleteComment(HashMap<String,Object> map);
 }
