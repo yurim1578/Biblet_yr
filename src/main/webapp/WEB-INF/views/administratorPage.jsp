@@ -138,12 +138,12 @@ dd.hidden {
 		<dt>총 코멘트</dt>
 		<dd class="hidden">
 			<form name="appr" action="<c:url value='/search'/>" method="post">
-				코멘트 검색 &nbsp:&nbsp <select name="CoOption">
+				코멘트 검색 &nbsp:&nbsp <select name="CoOption" id="CoOption">
 					<option value="mem_id">회원 아이디</option>
 					<option value="comment">코멘트</option>
-				</select> <input type="text" name="CoKeyword"
+				</select> <input type="text" name="CoKeyword" id="CoKeyword"
 					placeholder="회원 아이디, 코멘트 내용으로 검색" style="width: 30%;"> <input
-					type="submit" value="검색">
+					type="submit" value="검색" onClick="CommentStopPage(${CoOption},${Cokeyword})">
 			</form>
 			총 코멘트 수 : ${commentcount}
 			<table border="1">
@@ -225,7 +225,7 @@ dd.hidden {
 		integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 		crossorigin="anonymous"></script>
 
-<script>
+	<script>
 		var $menuEle = $('dt'); // 탭메뉴를 변수에 지정
 		$menuEle.click(function() { // 탭메뉴 클릭 이벤트
 			$('dd').addClass('hidden');
@@ -311,15 +311,40 @@ dd.hidden {
 		</c:forEach>
 		
 		<c:forEach var="comm" items="${searchApprList}">
-		<c:if test="${! empty comm.book_comment}">
-			bookinfo2("${comm.isbn}","${comm.mem_id}","${comm.book_comment}","${comm.appraisal_num}")		
-		</c:if>
-	</c:forEach>
+			<c:if test="${! empty comm.book_comment}">
+				bookinfo2("${comm.isbn}","${comm.mem_id}","${comm.book_comment}","${comm.appraisal_num}")		
+			</c:if>
+		</c:forEach>
 		
 		
 	});
 	
-	
+	function CommentStopPage(CoOption,Cokeyword){
+		let CoOption =$("#CoOption").val();
+		let Cokeyword=$("#Cokeyword").val();
+		
+		$.ajax({
+			url:'<c:url value="/commentPage"/>',
+			type:'POST',
+			data:JSON.stringify({
+				"CoOption":CoOption,
+				"CoKeyword":CoKeyword
+			}),
+			dataType:"json",
+			contentType:'application/json',
+			success:function(data){
+				if(data==1){
+					<c:forEach var="comm" items="${searchApprList}">
+						<c:if test="${! empty comm.book_comment}">
+							bookinfo2("${comm.isbn}","${comm.mem_id}","${comm.book_comment}","${comm.appraisal_num}")		
+						</c:if>
+					</c:forEach>
+				}else if(data==0){
+					alert("검색결과가 없습니다.");
+				}
+			}
+		})
+	};
 	</script>
 </body>
 </html>

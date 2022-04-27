@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -125,6 +127,23 @@ public class AdministratorController {
 		return "administratorPage";
 	}
 
+	@ResponseBody
+	@PostMapping("/commentPage")
+	public int searchComment(@RequestBody@ModelAttribute("appr") CommandListAppr appr,Model model) {
+		if("".equals(appr.getCoOption())||appr.getCoOption()==null){
+			appr.setCoOption("mem_id");
+			appr.setCoKeyword(null);
+			
+			return 0;
+		}else {
+		List<CommandListAppr> searchApprList=admPageService.searchComments(appr);
+		model.addAttribute("searchApprList", searchApprList);
+		
+		int commentcount=admPageService.countComment();
+		model.addAttribute("commentcount", commentcount);
+		return 1;
+		}
+	}
 //	@RequestMapping(value = "/searchAdm", method = RequestMethod.POST)
 //	public String searchAdminInfo(@ModelAttribute("admin") AdministratorVO admin, Model model1) {
 //		List<AdministratorVO> searchAdmList = admPageService.searchAdmin(admin);

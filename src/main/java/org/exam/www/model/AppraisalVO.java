@@ -4,25 +4,26 @@ import java.sql.Date;
 
 public class AppraisalVO {
 
-	private int mem_num;
-	private String isbn;
+	private int appraisal_num;
+	private int book_status_num;
 	private String star;
 	private String book_comment;
 	private Date start_date;
 	private Date end_date;
 	private String co_prv;
 	
-	public int getMem_num() {
-		return mem_num;
+	
+	public int getAppraisal_num() {
+		return appraisal_num;
 	}
-	public void setMem_num(int mem_num) {
-		this.mem_num = mem_num;
+	public void setAppraisal_num(int appraisal_num) {
+		this.appraisal_num = appraisal_num;
 	}
-	public String getIsbn() {
-		return isbn;
+	public int getBook_status_num() {
+		return book_status_num;
 	}
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+	public void setBook_status_num(int book_status_num) {
+		this.book_status_num = book_status_num;
 	}
 	public String getStar() {
 		return star;
@@ -54,12 +55,14 @@ public class AppraisalVO {
 	public void setCo_prv(String co_prv) {
 		this.co_prv = co_prv;
 	}
-	
 	@Override
 	public String toString() {
-		return "AppraisalVO [mem_num=" + mem_num + ", isbn=" + isbn + ", star=" + star + ", book_comment="
-				+ book_comment + ", start_date=" + start_date + ", end_date=" + end_date + ", co_prv=" + co_prv + "]";
+		return "AppraisalVO [appraisal_num=" + appraisal_num + ", book_status_num=" + book_status_num + ", star=" + star
+				+ ", book_comment=" + book_comment + ", start_date=" + start_date + ", end_date=" + end_date
+				+ ", co_prv=" + co_prv + "]";
 	}
+	
+	
 	
 	
 }

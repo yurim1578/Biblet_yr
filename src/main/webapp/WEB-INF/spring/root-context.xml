@@ -56,6 +56,7 @@
 			<list>
 				<value>classpath:config/sqlmap-regist.xml</value>
 				<value>classpath:config/sqlmap-administrator.xml</value>
+				<value>classpath:config/sqlmap-login.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -79,10 +80,6 @@
 		<constructor-arg ref="sqlSessionTemplate"/>
 	</bean>
 	
-<!-- 	<bean id="admPageServcie" class="org.exam.www.service.AdmPageServiceImpl">
-		<property name="administratorpageDAO" ref="administratorpageDAO"/>
-	</bean>
- -->
 	<bean id="emailSendService"
 		class="org.exam.www.service.MailSendService">
 	</bean>

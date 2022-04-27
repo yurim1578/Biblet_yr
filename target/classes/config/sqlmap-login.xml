@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="LoginDAO">
+ 	
+ 	<!-- 회원 로그인 -->
+ 	<select id="selectById" resultType="member">
+  		SELECT * FROM member WHERE mem_id=#{mem_id} AND AUTHSTATUS = '1'
+ 	</select>
+ 	
+ 	<!-- admin로그인 -->
+ 	<select id="loginCheck" resultType="String">
+  		SELECT adm_name FROM administrator WHERE adm_Id=#{adm_Id}
+ 	</select>
+ 	
+</mapper>
