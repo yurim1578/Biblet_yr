@@ -7,9 +7,12 @@ import org.exam.www.model.AdministratorVO;
 import org.exam.www.model.CommandListAppr;
 import org.exam.www.model.MemberVO;
 import org.exam.www.service.AdmPageService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 @Controller
 public class AdministratorController {
 
+	private static final Object Object = null;
+	private static final String String = null;
 	private AdmPageService admPageService;
 
 	@Autowired
@@ -76,8 +82,7 @@ public class AdministratorController {
 
 	//@ResponseBody 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String searchInfo(@ModelAttribute("member") MemberVO member, @ModelAttribute("admin") AdministratorVO admin,
-			@ModelAttribute("appr") CommandListAppr appr,Model model) throws Exception {
+	public String searchInfo(@ModelAttribute("member") MemberVO member, Model model) throws Exception {
 
 		if ("".equals(member.getOption()) || member.getOption() == null) {
 			member.setOption("mem_num");
@@ -85,15 +90,15 @@ public class AdministratorController {
 		}
 		// System.out.println(member.toString());
 		// System.out.println(admin.toString());
-		if ("".equals(admin.getAdmOption()) || admin.getAdmOption() == null) {
-			admin.setAdmOption("adm_num");
-			admin.setAdmKeyword(null);
-		}
+//		if ("".equals(admin.getAdmOption()) || admin.getAdmOption() == null) {
+//			admin.setAdmOption("adm_num");
+//			admin.setAdmKeyword(null);
+//		}
 		// System.out.println(admin.toString());
-		if("".equals(appr.getCoOption())||appr.getCoOption()==null){
-			appr.setCoOption("mem_id");
-			appr.setCoKeyword(null);
-		}
+//		if("".equals(appr.getCoOption())||appr.getCoOption()==null){
+//			appr.setCoOption("mem_id");
+//			appr.setCoKeyword(null);
+//		}
 		
 		//회원검색
 		List<MemberVO> searchList = admPageService.searchMember(member);
@@ -109,40 +114,120 @@ public class AdministratorController {
 		int starcount = admPageService.countStar();
 		model.addAttribute("starcount", starcount);
 		
-		//코멘트 검색
-		List<CommandListAppr> searchApprList=admPageService.searchComments(appr);
-		model.addAttribute("searchApprList", searchApprList);
-		
-		int commentcount=admPageService.countComment();
-		model.addAttribute("commentcount", commentcount);
-		
+//		//코멘트 검색
+//		List<CommandListAppr> searchApprList=admPageService.searchComments(appr);
+//		model.addAttribute("searchApprList", searchApprList);
+//		
+//		int commentcount=admPageService.countComment();
+//		model.addAttribute("commentcount", commentcount);
+//		
 		//관리자 검색
-		List<AdministratorVO> searchAdmList = admPageService.searchAdmin(admin);
-		model.addAttribute("searchAdmList", searchAdmList);
-
-		int admcount = admPageService.countAdmin();
-		model.addAttribute("admcount", admcount);
+//		List<AdministratorVO> searchAdmList = admPageService.searchAdmin(admin);
+//		model.addAttribute("searchAdmList", searchAdmList);
+//
+//		int admcount = admPageService.countAdmin();
+//		model.addAttribute("admcount", admcount);
 
 		// return "administratorPage";
 		return "administratorPage";
 	}
 
 	@ResponseBody
-	@PostMapping("/commentPage")
-	public int searchComment(@RequestBody@ModelAttribute("appr") CommandListAppr appr,Model model) {
-		if("".equals(appr.getCoOption())||appr.getCoOption()==null){
+	@RequestMapping(value = "/commentPage", produces = "application/json; charset=UTF-8", method= RequestMethod.POST)
+	public String searchAdmInfo(@RequestBody CommandListAppr appr) {
+		//System.out.println("0:"+appr.getCoKeyword());
+		if("".equals(appr.getCoOption())||appr.getCoOption()==null) {
+			//System.out.println("1:"+appr.getCoKeyword());
 			appr.setCoOption("mem_id");
 			appr.setCoKeyword(null);
+			List<CommandListAppr> searchApprList=admPageService.searchComments(appr);
 			
-			return 0;
+			JSONObject jo=new JSONObject();
+			
+			JSONArray ja=new JSONArray();
+			for (int i=0;i<searchApprList.size();i++) {
+				JSONObject jso=new JSONObject();
+				jso.put("bookcomment",searchApprList.get(i).getBook_comment());
+				jso.put("isbn", searchApprList.get(i).getIsbn());
+				jso.put("mem_id", searchApprList.get(i).getMem_id());
+				jso.put("appraisal_num",searchApprList.get(i).getAppraisal_num());
+				ja.put(jso);
+			}
+			jo.put("item",ja);
+			return jo.toString();
 		}else {
 		List<CommandListAppr> searchApprList=admPageService.searchComments(appr);
-		model.addAttribute("searchApprList", searchApprList);
+		//System.out.println("2:"+appr.getCoKeyword());
+		JSONObject jo=new JSONObject();
 		
-		int commentcount=admPageService.countComment();
-		model.addAttribute("commentcount", commentcount);
-		return 1;
+		JSONArray ja=new JSONArray();
+		for (int i=0;i<searchApprList.size();i++) {
+			JSONObject jso=new JSONObject();
+			jso.put("bookcomment",searchApprList.get(i).getBook_comment());
+			jso.put("isbn", searchApprList.get(i).getIsbn());
+			jso.put("mem_id", searchApprList.get(i).getMem_id());
+			jso.put("appraisal_num",searchApprList.get(i).getAppraisal_num());
+			ja.put(jso);
 		}
+		jo.put("item",ja);
+		
+
+		return jo.toString();
+//		int commentcount=admPageService.countComment();
+//		model.addAttribute("commentcount", commentcount);
+//		
+		}
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/admInfoPage", produces = "application/json; charset=UTF-8", method= RequestMethod.POST)
+	public String searchComment(@RequestBody AdministratorVO admin) {
+		//System.out.println("0:"+admin.getAdmKeyword());
+		if ("".equals(admin.getAdmOption()) || admin.getAdmOption() == null) {
+			admin.setAdmOption("adm_num");
+			admin.setAdmKeyword(null);
+		
+			List<AdministratorVO> searchAdmList = admPageService.searchAdmin(admin);
+
+			JSONObject jo=new JSONObject();
+			
+			JSONArray ja=new JSONArray();
+			for (int i=0;i<searchAdmList.size();i++) {
+				JSONObject jso=new JSONObject();
+				jso.put("adm_num",searchAdmList.get(i).getAdm_num());
+				jso.put("adm_name", searchAdmList.get(i).getAdm_name());
+				jso.put("adm_id", searchAdmList.get(i).getAdm_id());
+				jso.put("adm_regdate",searchAdmList.get(i).getAdm_regdate());
+				jso.put("adm_email",searchAdmList.get(i).getAdm_email());
+				jso.put("adm_authstatus",searchAdmList.get(i).getAdm_authstatus());
+				ja.put(jso);
+			}
+			jo.put("item",ja);
+			return jo.toString();
+		}else {
+			List<AdministratorVO> searchAdmList = admPageService.searchAdmin(admin);
+
+			JSONObject jo=new JSONObject();
+			
+			JSONArray ja=new JSONArray();
+			for (int i=0;i<searchAdmList.size();i++) {
+				JSONObject jso=new JSONObject();
+				jso.put("adm_num",searchAdmList.get(i).getAdm_num());
+				jso.put("adm_name", searchAdmList.get(i).getAdm_name());
+				jso.put("adm_id", searchAdmList.get(i).getAdm_id());
+				jso.put("adm_regdate",searchAdmList.get(i).getAdm_regdate());
+				jso.put("adm_email",searchAdmList.get(i).getAdm_email());
+				jso.put("adm_authstatus",searchAdmList.get(i).getAdm_authstatus());
+				ja.put(jso);
+			}
+			jo.put("item",ja);
+			return jo.toString();
+//		int commentcount=admPageService.countComment();
+//		model.addAttribute("commentcount", commentcount);
+//		
+		}
+		
 	}
 //	@RequestMapping(value = "/searchAdm", method = RequestMethod.POST)
 //	public String searchAdminInfo(@ModelAttribute("admin") AdministratorVO admin, Model model1) {

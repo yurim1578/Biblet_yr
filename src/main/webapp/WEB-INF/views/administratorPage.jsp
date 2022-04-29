@@ -123,28 +123,28 @@ dd.hidden {
 				<tbody id="dynamicTbody">
 
 				</tbody>
-				
+
 				<c:if test="${! empty searchApprList }">
-					
+
 					<tbody id="dynamicTbody">
 
 					</tbody>
 				</c:if>
-				
-				
+
+
 			</table>
 		</dd>
 
 		<dt>총 코멘트</dt>
 		<dd class="hidden">
-			<form name="appr" action="<c:url value='/search'/>" method="post">
-				코멘트 검색 &nbsp:&nbsp <select name="CoOption" id="CoOption">
+			
+				코멘트 검색 &nbsp:&nbsp <select name="coOption" id="coOption">
 					<option value="mem_id">회원 아이디</option>
 					<option value="comment">코멘트</option>
-				</select> <input type="text" name="CoKeyword" id="CoKeyword"
+				</select> <input type="text" name="coKeyword" id="coKeyword"
 					placeholder="회원 아이디, 코멘트 내용으로 검색" style="width: 30%;"> <input
-					type="submit" value="검색" onClick="CommentStopPage(${CoOption},${Cokeyword})">
-			</form>
+					type="button" value="검색" onClick="javascript:CommentStopPage()"/>
+
 			총 코멘트 수 : ${commentcount}
 			<table border="1">
 				<tr>
@@ -159,7 +159,9 @@ dd.hidden {
 				<tbody id="dynamicTbody2">
 
 				</tbody>
-				
+				<tbody id="test">
+
+				</tbody>
 				<c:if test="${! empty searchApprList }">
 					<tbody id="dynamicTbody2">
 
@@ -170,15 +172,15 @@ dd.hidden {
 
 		<dt>관리자 정보</dt>
 		<dd class="hidden">
-			<form name="admin" action="<c:url value='/search'/>" method="post">
-				가입 관리자 검색 &nbsp:&nbsp <select name="admOption">
+			
+				가입 관리자 검색 &nbsp:&nbsp <select name="admOption" id="admOption">
 					<option value="adm_num">관리자 번호</option>
 					<option value="adm_name">관리자 이름</option>
 					<option value="adm_email">관리자 이메일</option>
-				</select> <input type="text" name="admKeyword"
+				</select> <input type="text" name="admKeyword" id="admKeyword"
 					placeholder="관리자 번호, 이름, 이메일로 검색" style="width: 30%;"> <input
-					type="submit" value="검색">
-			</form>
+					type="button" value="검색" onClick="javascript:AdmStopPage()">
+			
 
 			가입 관리자 수 : ${admcount} <br> 관리자 코드 : ABC
 			<table border="1">
@@ -190,6 +192,9 @@ dd.hidden {
 					<th>이메일</th>
 					<th>이메일 인증 완료 여부</th>
 				</tr>
+				<tbody id="Tbody3">
+
+					
 				<c:forEach var="admin" items="${adminList}">
 					<tr>
 						<td>${admin.adm_num }</td>
@@ -217,6 +222,7 @@ dd.hidden {
 						</tr>
 					</c:forEach>
 				</c:if>
+				</tbody>
 			</table>
 		</dd>
 	</dl>
@@ -262,6 +268,7 @@ dd.hidden {
 		};
 		
 		function bookinfo2(isbn, mem_id, comment,appr_num) {
+			$("#dynamicTbody2").empty();
 			var pageNum = 1;
 			$.ajax({ //카카오 검색요청 / [요청]
 				method : "GET",
@@ -316,35 +323,72 @@ dd.hidden {
 			</c:if>
 		</c:forEach>
 		
-		
+
 	});
+	</script>
+	<script>
+function CommentStopPage(){
 	
-	function CommentStopPage(CoOption,Cokeyword){
-		let CoOption =$("#CoOption").val();
-		let Cokeyword=$("#Cokeyword").val();
-		
-		$.ajax({
-			url:'<c:url value="/commentPage"/>',
-			type:'POST',
-			data:JSON.stringify({
-				"CoOption":CoOption,
-				"CoKeyword":CoKeyword
-			}),
-			dataType:"json",
-			contentType:'application/json',
-			success:function(data){
-				if(data==1){
-					<c:forEach var="comm" items="${searchApprList}">
-						<c:if test="${! empty comm.book_comment}">
-							bookinfo2("${comm.isbn}","${comm.mem_id}","${comm.book_comment}","${comm.appraisal_num}")		
-						</c:if>
-					</c:forEach>
-				}else if(data==0){
-					alert("검색결과가 없습니다.");
+	let coOption=$("#coOption").val();
+	let coKeyword=$("#coKeyword").val();
+	console.log("확인" + coOption + coKeyword)
+	$.ajax({
+		url:'<c:url value="/commentPage"/>',
+		type:'POST',
+		dataType:'json',
+		contentType : "application/json; charset=UTF-8",
+		data:JSON.stringify({
+			"coOption" : coOption,
+			"coKeyword" : coKeyword
+		}),
+		success:function(data){
+			$("#dynamicTbody2").empty();
+			for(var i = 0; i < data.item.length; i++){
+				if(data.item[i].bookcomment!=null){
+					console.log(data.item[i].isbn,data.item[i].mem_id,data.item[i].bookcomment,data.item[i].appraisal_num);
+						bookinfo2(data.item[i].isbn,
+								data.item[i].mem_id,data.item[i].bookcomment,data.item[i].appraisal_num);		
 				}
 			}
-		})
-	};
+	}
+	   ,error:function(request,status,error){
+		    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+});
+};
+
+function AdmStopPage(){
+	
+	let admOption=$("#admOption").val();
+	let admKeyword=$("#admKeyword").val();
+	$.ajax({
+		url:'<c:url value="/admInfoPage"/>',
+		type:'POST',
+		dataType:'json',
+		contentType : "application/json; charset=UTF-8",
+		data:JSON.stringify({
+			"admOption" : admOption,
+			"admKeyword" : admKeyword
+		}),
+		success:function(data){
+			$("#Tbody3").empty();
+			for(var i = 0; i < data.item.length; i++){
+				var html='';
+				html +='<tr>';
+				html +='<td>'+data.item[i].adm_num+'</td>';
+				html +='<td>'+data.item[i].adm_name+'</td>';
+				html +='<td>'+data.item[i].adm_id+'</td>';
+				html +='<td>'+data.item[i].adm_regdate+'</td>';
+				html +='<td>'+data.item[i].adm_email+'</td>';
+				if(data.item[i].adm_authstatus==1){html +='<td>완료</td>';}
+				else if(data.item[i].adm_authstatus==0){html +='<td>미완료</td>';}
+				html +='<tr>';
+				$("#Tbody3").append(html);
+			}
+	}
+	   ,error:function(request,status,error){
+		    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+});
+};
 	</script>
 </body>
 </html>

@@ -7,8 +7,8 @@ public class CommandListAppr {
 	private String book_comment;
 	private int star;
 	private String isbn;
-	private String CoKeyword;
-	private String CoOption;
+	private String coKeyword;
+	private String coOption;
 	
 	
 	public int getAppraisal_num() {
@@ -35,31 +35,29 @@ public class CommandListAppr {
 	public void setStar(int star) {
 		this.star = star;
 	}
-	
-	
-	
 	public String getIsbn() {
 		return isbn;
 	}
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
+	
 	public String getCoKeyword() {
-		return CoKeyword;
+		return coKeyword;
 	}
 	public void setCoKeyword(String coKeyword) {
-		CoKeyword = coKeyword;
+		this.coKeyword = coKeyword;
 	}
 	public String getCoOption() {
-		return CoOption;
+		return coOption;
 	}
 	public void setCoOption(String coOption) {
-		CoOption = coOption;
+		this.coOption = coOption;
 	}
 	@Override
 	public String toString() {
 		return "CommandListAppr [mem_id=" + mem_id + ", book_comment=" + book_comment + ", star=" + star+
-				", isbn=" + isbn + ", CoKeyword=" + CoKeyword + ", CoOption=" + CoOption + "]";
+				", isbn=" + isbn + ", CoKeyword=" + coKeyword + ", CoOption=" + coOption + "]";
 	}
 	
 	

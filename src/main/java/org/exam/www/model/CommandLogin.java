@@ -9,6 +9,7 @@ public class CommandLogin {
 	@NotEmpty(message="필수 입력란 입니다.")
 	private String mem_pass;
 	private boolean rememberId;
+	private int authstatus;
 
 	public String getMem_id() {
 		return mem_id;
@@ -33,4 +34,13 @@ public class CommandLogin {
 	public void setRememberId(boolean rememberId) {
 		this.rememberId = rememberId;
 	}
+
+	public int getAuthstatus() {
+		return authstatus;
+	}
+
+	public void setAuthstatus(int authstatus) {
+		this.authstatus = authstatus;
+	}
+	
 }

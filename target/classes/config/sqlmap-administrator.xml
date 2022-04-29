@@ -78,15 +78,15 @@
 	</select>
 
 	<select id="searchComments" parameterType="loa" resultType="loa">
-		<if test="CoOption.equals('mem_id')">SELECT
+		<if test="coOption.equals('mem_id')">SELECT
 			APPRAISAL.APPRAISAL_NUM,MEMBER.MEM_ID,APPRAISAL.STAR,APPRAISAL.BOOK_COMMENT,BOOKSHELF.ISBN
 			FROM BOOKSHELF
 			INNER JOIN APPRAISAL ON BOOKSHELF.BOOK_STATUS_NUM =
 			APPRAISAL.BOOK_STATUS_NUM
 			INNER JOIN MEMBER ON BOOKSHELF.MEM_NUM =
 			MEMBER.MEM_NUM WHERE
-			MEMBER.MEM_ID LIKE '%'||#{CoKeyword}||'%'</if>
-		<if test="CoOption.equals('comment')">SELECT
+			MEMBER.MEM_ID LIKE '%'||#{coKeyword}||'%'</if>
+		<if test="coOption.equals('comment')">SELECT
 			APPRAISAL.APPRAISAL_NUM,MEMBER.MEM_ID,APPRAISAL.STAR,APPRAISAL.BOOK_COMMENT,BOOKSHELF.ISBN
 			FROM BOOKSHELF
 			INNER JOIN APPRAISAL ON BOOKSHELF.BOOK_STATUS_NUM =
@@ -94,7 +94,7 @@
 			INNER JOIN MEMBER ON BOOKSHELF.MEM_NUM =
 			MEMBER.MEM_NUM WHERE
 			APPRAISAL.BOOK_COMMENT LIKE
-			'%'||#{CoKeyword}||'%'</if>
-		<if test="CoOption==null or CoOption.equals(' ')">1=1</if>
+			'%'||#{coKeyword}||'%'</if>
+		<if test="coOption==null or coOption.equals(' ')">1=1</if>
 	</select>
 </mapper>

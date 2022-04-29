@@ -52,7 +52,7 @@ public class LoginController {
 		try {
 			System.out.println(login.getMem_id());
 			System.out.println(login.getMem_pass());
-
+		
 			CommandAuthInfo authInfo = loginService.authenticate(login.getMem_id(), login.getMem_pass());
 
 			session.setAttribute("authInfo", authInfo);
@@ -71,7 +71,7 @@ public class LoginController {
 			return "/main";
 
 		} catch (IdPasswordNotMatchingException e) {
-			errors.reject("IdPasswordMatching");
+			errors.rejectValue("mem_pass","IdPasswordMatching");
 			return "/loginForm";
 		}
 

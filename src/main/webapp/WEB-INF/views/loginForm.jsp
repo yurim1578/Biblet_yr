@@ -19,7 +19,7 @@
 		</p>
 		<p>
 			<label> <spring:message code="mem_pass" /> <form:input
-					path="mem_pass" /> <form:errors path="mem_pass" />
+					type="password" path="mem_pass" /> <form:errors path="mem_pass" />
 			</label>
 		</p>
 		<p>
