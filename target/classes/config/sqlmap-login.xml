@@ -6,12 +6,12 @@
  	
  	<!-- 회원 로그인 -->
  	<select id="selectById" resultType="member">
-  		SELECT * FROM member WHERE mem_id=#{mem_id} AND AUTHSTATUS = '1'
+  		SELECT * FROM member WHERE mem_id=#{mem_id}
  	</select>
  	
  	<!-- admin로그인 -->
- 	<select id="loginCheck" resultType="String">
-  		SELECT adm_name FROM administrator WHERE adm_Id=#{adm_Id}
+ 	<select id="selectByAdminId" parameterType="String" resultType="admin">
+  		SELECT * FROM ADMINISTRATOR WHERE adm_id=#{adm_id}
  	</select>
  	
 </mapper>

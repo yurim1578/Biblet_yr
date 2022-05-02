@@ -13,6 +13,13 @@ public class AppraisalVO {
 	private String co_prv;
 	
 	
+	public AppraisalVO(int book_status_num, String star, String book_comment, String co_prv) {
+		
+		this.book_status_num = book_status_num;
+		this.star = star;
+		this.book_comment = book_comment;
+		this.co_prv = co_prv;
+	}
 	public int getAppraisal_num() {
 		return appraisal_num;
 	}

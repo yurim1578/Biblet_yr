@@ -7,9 +7,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+ <script type="text/javascript">
+ window.history.forward();
+</script>
+
 <title><spring:message code="login.title" /></title>
 </head>
-<body>
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
 	<form:form commandName="commandLogin">
 		<form:errors />
 		<p>

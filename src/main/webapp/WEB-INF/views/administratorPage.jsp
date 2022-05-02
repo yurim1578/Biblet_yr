@@ -43,6 +43,10 @@ dd.hidden {
 </head>
 <body>
 
+[${sessionScope.adm_id}]님 안녕하세요 
+
+<span><a href="logout">로그아웃</a></span>
+
 	<dl>
 		<dt>가입 회원 현황</dt>
 		<dd>

@@ -10,6 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>BiBlet 회원가입</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css">
 <script type="text/javascript">
 	function fnChkByte(obj, maxByte, id) {
 		var str = obj.value;
@@ -52,40 +53,43 @@
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
+<div class="form-group text-center" style="background:lavender">
 	<h1>회원 가입</h1>
 	<form:form commandName="member">
-		<div>
-			<label>이름</label>
+		<div class="input-group mb-3" style="width: 35.1%;">
+			<span class="input-group-text" id="inputGroup-sizing-default" style="width: 13.5%;">이름</span>
 			<form:input path="mem_name" limitbyte="50"
 				placeholder="한글 6자, 영문50자 이내"
-				onKeyUp="javascript:fnChkByte(this,'50','byteInfo')" />
-			<span id="byteInfo">0</span> / 50bytes
+				onKeyUp="javascript:fnChkByte(this,'50','byteInfo')" type="text" 
+				class="form-control" aria-label="Sizing example input" 
+				aria-describedby="inputGroup-sizing-lg"/>
+			<span class="input-group-text" style="width: 15%;"><span id="byteInfo">0</span> / 50bytes</span>
 			<form:errors path="mem_name" />
 		</div>
-		<div>
-			<label>아이디</label>
+		<div class="input-group mb-3" style="width: 35.1%;">
+			<span class="input-group-text" id="inputGroup-sizing-default" style="width: 13.5%;">아이디</span>
 			<form:input path="mem_id" limitbyte="100"
 				placeholder="한글 33자, 영문100자 이내"
-				onKeyUp="javascript:fnChkByte(this,'100','byteInfo2')" />
-			<span id="byteInfo2">0</span> / 100bytes
+				onKeyUp="javascript:fnChkByte(this,'100','byteInfo2')" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"/>
+			<span class="input-group-text" style="width: 15%;"><span id="byteInfo2">0</span> / 100bytes</span>
 			<form:errors path="mem_id" />
 		</div>
-		<div>
-			<label>비밀번호</label>
+		<div class="input-group mb-3" style="width: 35.1%;">
+			<span class="input-group-text" id="inputGroup-sizing-default" style="width: 13.5%;">비밀번호</span>
 			<form:input type="password" path="mem_pass" limitbyte="200"
 				placeholder="한글66자, 영문200자 이내"
-				onKeyUp="javascript:fnChkByte(this,'200','byteInfo3')" />
-			<span id="byteInfo3">0</span> / 200bytes
+				onKeyUp="javascript:fnChkByte(this,'200','byteInfo3')" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" />
+			<span class="input-group-text" style="width: 15%;"><span id="byteInfo3">0</span> / 200bytes</span>
 			<form:errors path="mem_pass" />
 		</div>
-		<div>
-			<label>이메일</label>
-			<form:input path="mem_email" />
+		<div class="input-group mb-3" style="width: 35.1%;">
+			<span class="input-group-text" id="inputGroup-sizing-default" style="width: 13.5%;">이메일</span>
+			<form:input path="mem_email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"/>
 			<form:errors path="mem_email" />
 		</div>
 
-		<div>
-			<input type="submit" value="회원가입" />
+		 <div>
+			<input type="submit" value="회원가입" class="btn btn-primary" style="background-color: purple;"/>
 		</div>
 
 		<!-- 네이버 로그인 버튼 노출 영역 -->
@@ -104,5 +108,6 @@
 			src="http://static.nid.naver.com/oauth/small_g_in.PNG" /></a>
 
 	</form:form>
+	</div>
 </body>
 </html>
