@@ -35,7 +35,7 @@ public class AdministratorController {
 	}
 
 	// 합칠때 로그인시 mapping되도록 ->POST로 변경
-	@RequestMapping("/adminPage")
+	@RequestMapping(value="/adminPage",method=RequestMethod.POST)
 	public String adminPage(Model model) {
 		// 회원정보탭
 		List<MemberVO> memberList = admPageService.listOfMember();
