@@ -9,8 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>BiBlet 회원가입</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css">
+<title>BiBlet 회원 가입</title>
 <script type="text/javascript">
 	function fnChkByte(obj, maxByte, id) {
 		var str = obj.value;
@@ -51,48 +50,85 @@
 	charset="utf-8"></script>
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/registPage.css" type="text/css">
 </head>
 <body>
-<div class="form-group text-center" style="background:lavender">
-	<h1>회원 가입</h1>
+<div class="container">
+<div class="row d-flex justify-content-center mt-5">
+<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+<div class="card py-3 px-2">
+	<p class="text-center mb-3 mt-2">일반 회원 가입</p>
+	<div class="division">
+		<div class="row">
+			<div class="col-3"><div class="line l"></div></div>
+			<div class="col-6"><span>BiBlet 회원 가입</span></div>
+			<div class="col-3"><div class="line r"></div></div>
+		</div>
+	</div>
+	<form class="myform">
 	<form:form commandName="member">
-		<div class="input-group mb-3" style="width: 35.1%;">
-			<span class="input-group-text" id="inputGroup-sizing-default" style="width: 13.5%;">이름</span>
+		
+		<div class="form-group">
+			<span>이름</span>
 			<form:input path="mem_name" limitbyte="50"
 				placeholder="한글 6자, 영문50자 이내"
 				onKeyUp="javascript:fnChkByte(this,'50','byteInfo')" type="text" 
-				class="form-control" aria-label="Sizing example input" 
-				aria-describedby="inputGroup-sizing-lg"/>
-			<span class="input-group-text" style="width: 15%;"><span id="byteInfo">0</span> / 50bytes</span>
+				 class="form-control"/>
+			<span><span id="byteInfo">0</span> / 50bytes</span>
 			<form:errors path="mem_name" />
 		</div>
-		<div class="input-group mb-3" style="width: 35.1%;">
-			<span class="input-group-text" id="inputGroup-sizing-default" style="width: 13.5%;">아이디</span>
+		
+		<div class="form-group">
+			<span>아이디</span>
 			<form:input path="mem_id" limitbyte="100"
 				placeholder="한글 33자, 영문100자 이내"
-				onKeyUp="javascript:fnChkByte(this,'100','byteInfo2')" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"/>
-			<span class="input-group-text" style="width: 15%;"><span id="byteInfo2">0</span> / 100bytes</span>
+				onKeyUp="javascript:fnChkByte(this,'100','byteInfo2')" type="text" class="form-control"/>
+			<span><span id="byteInfo2">0</span> / 100bytes</span>
 			<form:errors path="mem_id" />
 		</div>
-		<div class="input-group mb-3" style="width: 35.1%;">
-			<span class="input-group-text" id="inputGroup-sizing-default" style="width: 13.5%;">비밀번호</span>
+		
+		<div class="form-group">
+			<span >비밀번호</span>
 			<form:input type="password" path="mem_pass" limitbyte="200"
 				placeholder="한글66자, 영문200자 이내"
-				onKeyUp="javascript:fnChkByte(this,'200','byteInfo3')" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" />
-			<span class="input-group-text" style="width: 15%;"><span id="byteInfo3">0</span> / 200bytes</span>
+				onKeyUp="javascript:fnChkByte(this,'200','byteInfo3')"  class="form-control"/>
+			<span ><span id="byteInfo3">0</span> / 200bytes</span>
 			<form:errors path="mem_pass" />
 		</div>
-		<div class="input-group mb-3" style="width: 35.1%;">
-			<span class="input-group-text" id="inputGroup-sizing-default" style="width: 13.5%;">이메일</span>
-			<form:input path="mem_email" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"/>
+		
+		<div class="form-group">
+			<span >이메일</span>
+			<form:input path="mem_email" type="text" class="form-control"/>
 			<form:errors path="mem_email" />
 		</div>
 
-		 <div>
-			<input type="submit" value="회원가입" class="btn btn-primary" style="background-color: purple;"/>
+		<div class="form-group mt-3">
+			<button type="submit" class="btn btn-block btn-primary btn-lg">
+			<small><i class="far fa-user pr-2"></i>회원 가입</small>
+			</button>
 		</div>
-
-		<!-- 네이버 로그인 버튼 노출 영역 -->
+		
+		<div class="text-center mb-3 mt-2">
+			<a href="admRegistPage">관리자 회원 가입</a>
+		</div>
+		
+	</form:form>
+	
+		
+	
+	</form>
+	
+	<div class="division">
+	
+		<div class="row">
+			<div class="col-3"><div class="line l"></div></div>
+			<div class="col-6"><span>간편 로그인</span></div>
+			<div class="col-3"><div class="line r"></div></div>
+		</div>
+	</div>
+	
+	<!-- 네이버 로그인 버튼 노출 영역 -->
 		<%
 			String clientId = "d49IDn_y2lOLJI_iR5pL";//애플리케이션 클라이언트 아이디값";
 		String redirectURI = URLEncoder.encode("http://localhost:8080/www/home", "UTF-8");
@@ -104,10 +140,19 @@
 		apiURL += "&state=" + state;
 		session.setAttribute("state", state);
 		%>
-		<a href="<%=apiURL%>"><img height="50"
-			src="http://static.nid.naver.com/oauth/small_g_in.PNG" /></a>
-
-	</form:form>
+		
+	<div class="row mx-auto ">
+		<div class="col-4">
+			<a href="<%=apiURL%>"><img height="50"
+			src="http://static.nid.naver.com/oauth/small_g_in.PNG" />
+			
+			</a>
+		</div>
+	</div>
+	
+	</div>
+	</div>
+	</div>
 	</div>
 </body>
 </html>

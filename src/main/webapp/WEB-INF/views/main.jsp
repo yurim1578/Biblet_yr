@@ -15,7 +15,7 @@
 	<!-- 로그아웃 / 마이페이지  -->
 
 	<!-- 비로그인 시 홈 페이지 -->
-	<c:if test="${ authInfo == null}">
+	<c:if test="${ authInfo == null && adminauthInfo == null}">
 		<!-- 비로그인 -->
 		<div class="login_button">
 			<a href="login">로그인</a>
@@ -23,7 +23,7 @@
 		<div>
 			<a href="adminlogin">관리자 로그인</a>
 		</div>
-		<span><a href="joinForm">회원가입</a></span>
+		<span><a href="registPage">회원가입</a></span>
 
 	</c:if>
 	
