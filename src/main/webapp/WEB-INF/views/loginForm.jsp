@@ -7,13 +7,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <script type="text/javascript">
- window.history.forward();
+<script type="text/javascript">
+ if(${!empty sessionScope.authInfo}){
+	 window.history.forward();
+ }
 </script>
 
 <title><spring:message code="login.title" /></title>
 </head>
-<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
+<body>
 	<form:form commandName="commandLogin">
 		<form:errors />
 		<p>

@@ -8,11 +8,13 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript">
- window.history.forward();
+ if(${!empty sessionScope.adminauthInfo}){
+	 window.history.forward();
+ }
 </script>
 <title><spring:message code="admin.title"/></title>
 </head>
-<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
+<body>
 	<h2>관리자로그인</h2>
 	
 	<form:form commandName="commandAdminLogin">

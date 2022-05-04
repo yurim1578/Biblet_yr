@@ -153,7 +153,7 @@ public class LoginController {
 
 			
 			// 성공시 관리자 페이지로 이동
-			return "administratorPage";
+			return "redirect:/adminPage";
 
 		} catch (IdPasswordNotMatchingException e) {
 			errors.rejectValue("adm_pass", "IdPasswordNotMatching");
