@@ -10,7 +10,7 @@
 
 </head>
 <body>
-
+<h1></h1>
 <section class="error-container">
   <span>이메일 인증에 성공했습니다.<br><br><br>로그인이 가능합니다.</span>
 </section>
