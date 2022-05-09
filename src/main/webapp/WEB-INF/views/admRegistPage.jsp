@@ -59,8 +59,8 @@
 			<div class="col-3"><div class="line r"></div></div>
 		</div>
 	</div>
-	<form class="myform">
-	<form:form commandName="admin">
+	
+	<form:form commandName="admin" class="myform">
 		<div class="form-group">
 			<label>이름</label>
 			<form:input path="adm_name" limitbyte="50"
@@ -112,7 +112,7 @@
 		</div>
 		
 	</form:form>
-	</form>
+	
 	
 	</div>
 	</div>

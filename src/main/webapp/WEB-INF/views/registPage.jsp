@@ -66,8 +66,8 @@
 			<div class="col-3"><div class="line r"></div></div>
 		</div>
 	</div>
-	<form class="myform">
-	<form:form commandName="member">
+	
+	<form:form commandName="member" class="myform">
 		
 		<div class="form-group">
 			<span>이름</span>
@@ -117,7 +117,7 @@
 	
 		
 	
-	</form>
+	
 	
 	<div class="division">
 	
